@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
+using Thinktecture.IdentityModel.Tokens;
 
 namespace CodeFirst.Providers
 {
@@ -26,12 +26,10 @@ namespace CodeFirst.Providers
             var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
             var symmetricKeyAsBase64 = ConfigurationManager.AppSettings["as:AudienceSecret"];
             var keyByteArray = TextEncodings.Base64Url.Decode(symmetricKeyAsBase64);
-            //var signingKey = new HmacSigningCredentials(keyByteArray);
-            var securityKey = new SymmetricSecurityKey(keyByteArray);
-            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+            var signingKey = new HmacSigningCredentials(keyByteArray);
             var issued = data.Properties.IssuedUtc;
             var expires = data.Properties.ExpiresUtc;
-            var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingCredentials);
+            var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingKey);
             var handler = new JwtSecurityTokenHandler();
 
             var jwt = handler.WriteToken(token);

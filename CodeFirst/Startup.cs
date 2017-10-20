@@ -1,11 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net.Http.Formatting;
-using System.Web;
 using System.Web.Http;
+using System.Web.WebSockets;
 using CodeFirst.Models;
 using CodeFirst.Models.Infrastructure;
+using CodeFirst.Providers;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler.Encoder;
+using Microsoft.Owin.Security.Jwt;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -16,17 +21,34 @@ namespace CodeFirst
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration httpConfig = new HttpConfiguration();
-
+            var httpConfig = new HttpConfiguration();
             ConfigureOAuthTokenGeneration(app);
-
+            ConfigureOAuthTokenConsumption(app);
             ConfigureWebApi(httpConfig);
-
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
             app.UseWebApi(httpConfig);
-
         }
+
+        private void ConfigureOAuthTokenConsumption(IAppBuilder app)
+        {
+
+            const string issuer = "http://localhost:64572";
+            var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            var audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
+
+            // Api controllers with an [Authorize] attribute will be validated with JWT
+            var jwt = new JwtBearerAuthenticationOptions();
+            jwt.AuthenticationMode = AuthenticationMode.Active;
+            jwt.AllowedAudiences = new[] {audienceId};
+            jwt.IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
+            {
+                new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
+            };
+
+            app.UseJwtBearerAuthentication(jwt);
+        }
+
+
 
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
@@ -35,8 +57,18 @@ namespace CodeFirst
             app.CreatePerOwinContext(SegurancaDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
-            // Plugin the OAuth bearer JSON Web Token tokens generation and Consumption will be here
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                //For Dev enviroment only (on production should be AllowInsecureHttp = false)
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/oauth/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJwtFormat("http://localhost:64572")
+            };
 
+            // OAuth 2.0 Bearer Access Token Generation
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
         }
 
         private void ConfigureWebApi(HttpConfiguration config)
@@ -62,6 +94,6 @@ namespace CodeFirst
                 = DefaultValueHandling.Ignore;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
- 
+
     }
 }
