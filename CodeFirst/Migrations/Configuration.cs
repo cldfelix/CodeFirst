@@ -25,10 +25,10 @@ namespace CodeFirst.Migrations
 
             var user = new ApplicationUser
             {
-                UserName = "SuperPowerUser",
-                Email = "taiseer.joudeh@mymail.com",
+                UserName = "SuperUsuario",
+                Email = "claudinei.felix@outlook.com",
                 EmailConfirmed = true,
-                Nome = "Taiseer",
+                Nome = "Claudinei",
                 Sobrenome = "Joudeh",
                 Nivel = 1,
                 DataDeCriacao = DateTime.Now.AddYears(-3)

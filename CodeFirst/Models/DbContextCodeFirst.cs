@@ -29,27 +29,23 @@ namespace CodeFirst.Models
         public SegurancaDbContext()
             : base("ConexaoSeguranca", throwIfV1Schema: false)
         {
+
             //Database.SetInitializer(new SegurancaInicializacao());
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            /* Alterar o dbo padrao */
+             modelBuilder.HasDefaultSchema("seguranca");
+
         }
 
         public static SegurancaDbContext Create()
         {
             return new SegurancaDbContext();
         }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    /* Alterar o dbo padrao */
-        //    modelBuilder.HasDefaultSchema("seguranca");
-        //    modelBuilder.Entity<IdentityUser>().ToTable("tbl_usuarios").Property(p => p.Id).HasColumnName("UserId");
-        //    modelBuilder.Entity<ApplicationUser>().ToTable("tbl_usuarios").Property(p => p.Id).HasColumnName("UserId");
-        //    modelBuilder.Entity<IdentityUserRole>().ToTable("tbl_regrasUsuarios");
-        //    modelBuilder.Entity<IdentityUserLogin>().ToTable("tbl_loginUsuarios");
-        //    modelBuilder.Entity<IdentityUserClaim>().ToTable("tbl_userClaims");
-        //    modelBuilder.Entity<IdentityRole>().ToTable("tbl_regrasGerais");
-        //}
 
     }
 
