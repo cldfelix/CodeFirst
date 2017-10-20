@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Net.Http.Formatting;
 using System.Web.Http;
-using System.Web.WebSockets;
 using CodeFirst.Models;
 using CodeFirst.Models.Infrastructure;
 using CodeFirst.Providers;
@@ -46,6 +45,7 @@ namespace CodeFirst
             };
 
             app.UseJwtBearerAuthentication(jwt);
+
         }
 
 
@@ -69,6 +69,8 @@ namespace CodeFirst
 
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
         }
 
         private void ConfigureWebApi(HttpConfiguration config)

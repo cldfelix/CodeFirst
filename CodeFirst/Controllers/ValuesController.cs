@@ -12,7 +12,8 @@ namespace CodeFirst.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [Authorize]
+        
+        [Authorize(Roles = "Admin")]
         // GET api/values/5
         public string Get(int id)
         {

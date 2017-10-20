@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Web.Http;
 using CodeFirst.Models;
 using CodeFirst.Models.Infrastructure;
@@ -14,28 +10,35 @@ namespace CodeFirst.Controllers
     public class BaseApiController : ApiController
     {
         private ModelFactory _modelFactory;
-        private ApplicationUserManager _AppUserManager = null;
+        private readonly ApplicationUserManager _appUserManager = null;
+        private readonly ApplicationRoleManager _appRoleManager;
 
+        protected ApplicationRoleManager AppRoleManager
+        {
+            get
+            {
+                return _appRoleManager ?? Request.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+            }
+        }
         protected ApplicationUserManager AppUserManager
         {
             get
             {
-                return _AppUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _appUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
 
-        public BaseApiController()
+        public BaseApiController(ApplicationRoleManager appRoleManager)
         {
+            _appRoleManager = appRoleManager;
         }
 
         protected ModelFactory TheModelFactory
         {
             get
             {
-                if (_modelFactory == null)
-                {
-                    _modelFactory = new ModelFactory(this.Request, this.AppUserManager);
-                }
+                if (_modelFactory != null) return _modelFactory;
+                _modelFactory = new ModelFactory(Request, AppUserManager);
                 return _modelFactory;
             }
         }
@@ -47,26 +50,22 @@ namespace CodeFirst.Controllers
                 return InternalServerError();
             }
 
-            if (!result.Succeeded)
+            if (result.Succeeded) return null;
+            if (result.Errors != null)
             {
-                if (result.Errors != null)
+                foreach (var error in result.Errors)
                 {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
+                    ModelState.AddModelError("", error);
                 }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
             }
 
-            return null;
+            if (ModelState.IsValid)
+            {
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }

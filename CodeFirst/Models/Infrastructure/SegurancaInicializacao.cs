@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -12,6 +13,8 @@ namespace CodeFirst.Models.Infrastructure
             //  This method will be called after migrating to the latest version.
 
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SegurancaDbContext()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SegurancaDbContext()));
+
 
             var user = new ApplicationUser
             {
@@ -25,6 +28,17 @@ namespace CodeFirst.Models.Infrastructure
             };
 
             manager.Create(user, "MySuperP@ssword!");
+
+            if (!roleManager.Roles.Any())
+            {
+                roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
+                roleManager.Create(new IdentityRole { Name = "Admin" });
+                roleManager.Create(new IdentityRole { Name = "Usuario" });
+            }
+
+            var adminUser = manager.FindByName("SuperPowerUser");
+
+            manager.AddToRoles(adminUser.Id, "SuperAdmin", "Admin");
         }
     }
 }
