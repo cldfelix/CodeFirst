@@ -27,10 +27,11 @@ namespace CodeFirst.Models
     public class SegurancaDbContext : IdentityDbContext<ApplicationUser>
     {
         public SegurancaDbContext()
-            : base("ConexaoSeguranca", throwIfV1Schema: false)
+            : base("ConexaoDbCodeFirst", throwIfV1Schema: false)
         {
 
             //Database.SetInitializer(new SegurancaInicializacao());
+            Database.SetInitializer<SegurancaDbContext>(null);
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
@@ -39,7 +40,12 @@ namespace CodeFirst.Models
         {
             /* Alterar o dbo padrao */
              modelBuilder.HasDefaultSchema("seguranca");
-
+             modelBuilder.Entity<IdentityUserLogin>().ToTable("tbl_usuario", "seguranca").HasKey<string>(l => l.UserId);
+             modelBuilder.Entity<ApplicationUser>().ToTable("tbl_usuario", "seguranca"); //.HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().ToTable("tbl_roles", "seguranca").HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().ToTable("tbl_usuarioRoles", "seguranca").HasKey(r => new { r.RoleId, r.UserId });
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("tbl_usuarioClaims", "seguranca").HasKey<int>(r => r.Id); 
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("tbl_usuarioLogins", "seguranca").HasKey<string>(r => r.UserId);
         }
 
         public static SegurancaDbContext Create()

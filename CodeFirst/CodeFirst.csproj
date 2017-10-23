@@ -243,9 +243,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710201803105_IniciodoBdSeguranca.cs" />
-    <Compile Include="Migrations\201710201803105_IniciodoBdSeguranca.Designer.cs">
-      <DependentUpon>201710201803105_IniciodoBdSeguranca.cs</DependentUpon>
+    <Compile Include="Migrations\201710231206177_SetupInicial.cs" />
+    <Compile Include="Migrations\201710231206177_SetupInicial.Designer.cs">
+      <DependentUpon>201710231206177_SetupInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -427,8 +427,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710201803105_IniciodoBdSeguranca.resx">
-      <DependentUpon>201710201803105_IniciodoBdSeguranca.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710231206177_SetupInicial.resx">
+      <DependentUpon>201710231206177_SetupInicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

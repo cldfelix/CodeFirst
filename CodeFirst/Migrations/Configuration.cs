@@ -19,16 +19,18 @@ namespace CodeFirst.Migrations
 
         protected override void Seed(CodeFirst.Models.SegurancaDbContext context)
         {
+            //  This method will be called after migrating to the latest version.
+
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SegurancaDbContext()));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SegurancaDbContext()));
 
 
             var user = new ApplicationUser
             {
-                UserName = "SuperUsuario",
-                Email = "claudinei.felix@outlook.com",
+                UserName = "SuperPowerUser",
+                Email = "taiseer.joudeh@mymail.com",
                 EmailConfirmed = true,
-                Nome = "Claudinei",
+                Nome = "Taiseer",
                 Sobrenome = "Joudeh",
                 Nivel = 1,
                 DataDeCriacao = DateTime.Now.AddYears(-3)
@@ -47,6 +49,5 @@ namespace CodeFirst.Migrations
 
             manager.AddToRoles(adminUser.Id, "SuperAdmin", "Admin");
         }
-        
     }
 }
