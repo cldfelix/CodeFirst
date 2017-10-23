@@ -22,7 +22,9 @@ namespace CodeFirst.Models.ClassesExemplo
         [Column("qtdEstoque")] /* Define nome da coluna no db*/
         [JsonProperty(PropertyName = "qtdEmEstoque")]
         public virtual int QtdEstoque { get; set; }
-        
+        [Column("imagem")] /* Define nome da coluna no db*/
+        [JsonProperty(PropertyName = "imagem")]
+        public string Imagem { get; set; }
         [JsonProperty(PropertyName = "categorias")]
         public ICollection<Categoria> Categorias { get; set; }
     }

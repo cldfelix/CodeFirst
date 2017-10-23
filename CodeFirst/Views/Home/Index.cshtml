@@ -1,8 +1,32 @@
 ﻿@section scripts {
-    <script src="~/Scripts/models/usuario.model.js"></script>
+    <script src="~/Scripts/models/Datacontext.js"></script>
+    <script src="~/Scripts/models/Categoria.js"></script>
+    <script src="~/Scripts/models/Produto.js"></script>
+    <script src="~/Scripts/models/DefaultViewModel.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            app.produtoViewModel.iniciar();
+            app.produtoViewModel.pegarProduto(1);
+            ko.applyBindings(app.produtoViewModel);
+        });
+    </script>
 }
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
+<article dataa-bind ="foreach: produtos">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 type="text" data-bind="enable: false, value: nomeDoProduto "></h3>
+            <h4 data-bind="text:preco "></h4>
+            <h5 data-bind="text:idProduto "></h5>
+        </div>
+        <div class="col-md-6">
+            <img src="http://lorempixel.com/400/200/foods" />
+        </div>
+    </div>
+
+</article>

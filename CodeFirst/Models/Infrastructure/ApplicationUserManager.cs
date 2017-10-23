@@ -18,7 +18,7 @@ namespace CodeFirst.Models.Infrastructure
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var appDbContext = context.Get<SegurancaDbContext>();
+            var appDbContext = context.Get<DbContextCodeFirst>();
             var appUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext));
 
             return appUserManager;

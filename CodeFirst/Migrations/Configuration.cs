@@ -10,19 +10,17 @@ namespace CodeFirst.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CodeFirst.Models.SegurancaDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CodeFirst.Models.DbContextCodeFirst>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CodeFirst.Models.SegurancaDbContext context)
+        protected override void Seed(CodeFirst.Models.DbContextCodeFirst context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SegurancaDbContext()));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SegurancaDbContext()));
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DbContextCodeFirst()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new DbContextCodeFirst()));
 
 
             var user = new ApplicationUser

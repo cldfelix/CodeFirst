@@ -243,9 +243,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710231206177_SetupInicial.cs" />
-    <Compile Include="Migrations\201710231206177_SetupInicial.Designer.cs">
-      <DependentUpon>201710231206177_SetupInicial.cs</DependentUpon>
+    <Compile Include="Migrations\201710231822430_SetupInicial.cs" />
+    <Compile Include="Migrations\201710231822430_SetupInicial.Designer.cs">
+      <DependentUpon>201710231822430_SetupInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -394,6 +394,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
+    <Content Include="Scripts\models\Categoria.js" />
+    <Content Include="Scripts\models\Datacontext.js" />
+    <Content Include="Scripts\models\DefaultViewModel.js" />
+    <Content Include="Scripts\models\Produto.js" />
+    <Content Include="Scripts\models\produto.model.js" />
     <Content Include="Scripts\models\usuario.model.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
@@ -427,8 +432,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710231206177_SetupInicial.resx">
-      <DependentUpon>201710231206177_SetupInicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710231822430_SetupInicial.resx">
+      <DependentUpon>201710231822430_SetupInicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

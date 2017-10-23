@@ -54,7 +54,7 @@ namespace CodeFirst
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
-            app.CreatePerOwinContext(SegurancaDbContext.Create);
+            app.CreatePerOwinContext(DbContextCodeFirst.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()

@@ -33,12 +33,12 @@ namespace CodeFirst.Models
 
             var listaDeProdutos = new List<Produto>
             {
-                new Produto{NomeProduto = "Alface", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 5, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}},
-                new Produto{NomeProduto = "Calça", Preco = 13.50d, EstaAtivo = true, QtdEstoque = 7, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1}},
-                new Produto{NomeProduto = "Bicicleta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 0, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat2}},
-                new Produto{NomeProduto = "Arroz", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 12, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2, cat3}},
-                new Produto{NomeProduto = "Carro", Preco = 65.50d, EstaAtivo = false, QtdEstoque = 21, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}},
-                new Produto{NomeProduto = "Planta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 95, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}}
+                new Produto{NomeProduto = "Alface", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 5, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Calça", Preco = 13.50d, EstaAtivo = true, QtdEstoque = 7, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Bicicleta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 0, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Arroz", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 12, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2, cat3}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Carro", Preco = 65.50d, EstaAtivo = false, QtdEstoque = 21, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Planta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 95, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"}
             };
 
 

@@ -19,9 +19,11 @@ namespace CodeFirst.Controllers
         private DbContextCodeFirst db = new DbContextCodeFirst();
 
         // GET: api/Produtos
-        public IQueryable<Produto> GetProdutos()
+        public List<Produto> GetProdutos()
         {
-            return db.Produtos;
+            var p = db.Produtos.ToList();
+
+            return p;
         }
 
         // GET: api/Produtos/5

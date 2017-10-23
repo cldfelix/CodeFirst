@@ -6,14 +6,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CodeFirst.Models.Infrastructure
 {
-    public class SegurancaInicializacao : DropCreateDatabaseAlways<SegurancaDbContext>
+    public class SegurancaInicializacao : DropCreateDatabaseAlways<DbContextCodeFirst>
     {
-        protected override void Seed(SegurancaDbContext context)
+        protected override void Seed(DbContextCodeFirst context)
         {
             //  This method will be called after migrating to the latest version.
 
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SegurancaDbContext()));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SegurancaDbContext()));
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DbContextCodeFirst()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new DbContextCodeFirst()));
 
 
             var user = new ApplicationUser
