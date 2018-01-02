@@ -1,7 +1,5 @@
-using CodeFirst.Models;
-using CodeFirst.Models.Infrastructure;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using CodeFirst.Models.ClassesExemplo;
 
 namespace CodeFirst.Migrations
 {
@@ -17,35 +15,44 @@ namespace CodeFirst.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CodeFirst.Models.DbContextCodeFirst context)
+        protected override void Seed(CodeFirst.Models.DbContextCodeFirst ctx)
         {
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DbContextCodeFirst()));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new DbContextCodeFirst()));
-
-
-            var user = new ApplicationUser
+            var cat1 = new Categoria
             {
-                UserName = "SuperPowerUser",
-                Email = "taiseer.joudeh@mymail.com",
-                EmailConfirmed = true,
-                Nome = "Taiseer",
-                Sobrenome = "Joudeh",
-                Nivel = 1,
-                DataDeCriacao = DateTime.Now.AddYears(-3)
+                NomeCategoria = "Frutas",
+                CriadaEm = DateTime.Now,
+                EstaAtivo = true
             };
 
-            manager.Create(user, "MySuperP@ssword!");
-
-            if (!roleManager.Roles.Any())
+            var cat2 = new Categoria
             {
-                roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
-                roleManager.Create(new IdentityRole { Name = "Admin" });
-                roleManager.Create(new IdentityRole { Name = "Usuario" });
-            }
+                NomeCategoria = "Limpeza",
+                CriadaEm = DateTime.Now,
+                EstaAtivo = true
+            };
 
-            var adminUser = manager.FindByName("SuperPowerUser");
+            var cat3 = new Categoria
+            {
+                NomeCategoria = "Variados",
+                CriadaEm = DateTime.Now,
+                EstaAtivo = true
+            };
 
-            manager.AddToRoles(adminUser.Id, "SuperAdmin", "Admin");
+
+            var listaDeProdutos = new List<Produto>
+            {
+                new Produto{NomeProduto = "Alface", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 5, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Calça", Preco = 13.50d, EstaAtivo = true, QtdEstoque = 7, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Bicicleta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 0, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Arroz", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 12, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2, cat3}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Carro", Preco = 65.50d, EstaAtivo = false, QtdEstoque = 21, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"},
+                new Produto{NomeProduto = "Planta", Preco = 2.50d, EstaAtivo = true, QtdEstoque = 95, CriadaEm = DateTime.Now, Categorias = new List<Categoria>{cat1, cat2}, Imagem = "http://lorempixel.com/400/200/foods"}
+            };
+
+
+            listaDeProdutos.ForEach(p => ctx.Produtos.Add(p));
+
+            ctx.SaveChanges();
         }
     }
 }
